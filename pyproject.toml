@@ -1,13 +1,15 @@
 [project]
 name = "gcp-pipeline"
 version = "0.1.0"
-description = "Add your description here"
+description = ""
 readme = "README.md"
 authors = [
-    { name = "Yossi Hartman", email = "yossiyhartman@gmail.com" }
+    { name = "Yossi Hartman", email = "" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "pytest>=9.0.2",
+]
 
 [project.scripts]
 gcp-pipeline = "gcp_pipeline:main"
@@ -15,3 +17,11 @@ gcp-pipeline = "gcp_pipeline:main"
 [build-system]
 requires = ["uv_build>=0.9.7,<0.10.0"]
 build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ['ALL']
+ignore = ['D100', 'D101', 'D104', 'D107','D202', 'S311']
+fixable = ["ALL"]

@@ -19,6 +19,12 @@ locals {
     "roles/cloudsql.admin",
     "roles/artifactregistry.admin"
   ]
+  enable_api_list = [
+    "iam.googleapis.com",
+    "artifactregistry.googleapis.com",
+    "run.googleapis.com",
+    "sqladmin.googleapis.com"
+  ]
 }
 
 # State Bucket
@@ -43,7 +49,7 @@ resource "google_storage_bucket" "terraform_state" {
 
 resource "google_project_service" "enabled_apis" {
   project            = var.project_name
-  for_each           = toset(var.enable_api_list)
+  for_each           = toset(local.enable_api_list)
   service            = each.key
   disable_on_destroy = false
 }
@@ -55,14 +61,6 @@ resource "google_service_account" "terraform_sa" {
   account_id   = var.service_account_id
   display_name = "Terraform Service Account"
   description  = "This account will be used for the CI pipeline."
-}
-
-# Service Account Roles
-
-resource "google_service_account_iam_member" "sa_account_user" {
-  service_account_id = google_service_account.terraform_sa.name
-  role               = "roles/iam.serviceAccountUser"
-  member             = "user:${var.personal_account}"
 }
 
 resource "google_project_iam_member" "sa_project_roles" {

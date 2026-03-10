@@ -40,6 +40,9 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
+      - name: Enable Terraform debug logs
+        run: echo "TF_LOG=DEBUG" >> $GITHUB_ENV
+
       - name: Terraform Plan
         if: github.event_name == 'pull_request'
         timeout-minutes: 5

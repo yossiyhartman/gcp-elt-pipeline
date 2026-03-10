@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  project = var.project_name
+  project = "yossi-infra-ci-project"
 }
 
 module "artifact-registry" {

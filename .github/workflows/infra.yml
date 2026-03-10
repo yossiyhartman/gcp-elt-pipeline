@@ -1,4 +1,4 @@
-name: CI
+name: Infra CI
 
 on:
   push:
@@ -42,7 +42,8 @@ jobs:
 
       - name: Terraform Plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -no-color
+        timeout-minutes: 5
+        run: terraform plan -no-color -input=false -lock-timeout=60s
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'

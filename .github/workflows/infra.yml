@@ -48,6 +48,7 @@ jobs:
 
       - name: Terraform Plan
         if: github.event_name == 'pull_request'
+        timeout-minutes: 5
         run: terraform plan -no-color -lock-timeout=60s
 
       - name: Terraform Apply

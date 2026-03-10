@@ -5,4 +5,6 @@ variable "project_name" {
 
 variable "test_var" {
   description = "dummy variable to test ci pipeline"
+  type        = string
+  default     = "dummy"
 }

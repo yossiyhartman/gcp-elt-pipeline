@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  - push
+
+jobs:
+  infra:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: infra/pipeline
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: list files
+        run: ls
+      # - name: Setup Terraform
+      #   uses: hashicorp/setup-terraform@v4
+      #   with:
+      #     terraform_version: 1.14.6
+
+      # - name: Authenticate to Google Cloud
+      #   uses: google-github-actions/auth@v2
+      #   with:
+      #     credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      # - name: Setup gcloud CLI
+      #   uses: google-github-actions/setup-gcloud@v3
+
+      # - name: Check gcloud
+      #   run: gcloud info
+
+      # - name: Terraform Format
+      #   run: terraform fmt -check
+
+      # - name: Terraform Init
+      #   run: terraform init
+
+      # - name: Terraform Validate
+      #   run: terraform validate

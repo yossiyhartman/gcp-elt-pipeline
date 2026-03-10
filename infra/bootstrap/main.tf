@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  project = var.project_name
+  project = "yossi-infra-ci-project"
 }
 
 
@@ -30,8 +30,8 @@ locals {
 # State Bucket
 
 resource "google_storage_bucket" "terraform_state" {
-  project  = var.project_name
-  name     = "${var.project_name}-terraform-state"
+  project  = "yossi-infra-ci-project"
+  name     = "yossi-infra-ci-project-terraform-state"
   location = "EU"
 
   uniform_bucket_level_access = true
@@ -48,7 +48,7 @@ resource "google_storage_bucket" "terraform_state" {
 # Enable APIs
 
 resource "google_project_service" "enabled_apis" {
-  project            = var.project_name
+  project            = "yossi-infra-ci-project"
   for_each           = toset(local.enable_api_list)
   service            = each.key
   disable_on_destroy = false
@@ -57,14 +57,14 @@ resource "google_project_service" "enabled_apis" {
 # Service Account
 
 resource "google_service_account" "terraform_sa" {
-  project      = var.project_name
-  account_id   = var.service_account_id
+  project      = "yossi-infra-ci-project"
+  account_id   = "terraform"
   display_name = "Terraform Service Account"
   description  = "This account will be used for the CI pipeline."
 }
 
 resource "google_project_iam_member" "sa_project_roles" {
-  project  = var.project_name
+  project  = "yossi-infra-ci-project"
   for_each = toset(local.service_account_roles)
   role     = each.value
   member   = "serviceAccount:${google_service_account.terraform_sa.email}"

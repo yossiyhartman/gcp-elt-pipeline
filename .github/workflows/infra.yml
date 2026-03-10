@@ -15,23 +15,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: list files
-        run: ls
-      # - name: Setup Terraform
-      #   uses: hashicorp/setup-terraform@v4
-      #   with:
-      #     terraform_version: 1.14.6
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.14.6
 
-      # - name: Authenticate to Google Cloud
-      #   uses: google-github-actions/auth@v2
-      #   with:
-      #     credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      # - name: Setup gcloud CLI
-      #   uses: google-github-actions/setup-gcloud@v3
+      - name: Setup gcloud CLI
+        uses: google-github-actions/setup-gcloud@v3
 
-      # - name: Check gcloud
-      #   run: gcloud info
+      - name: Check gcloud
+        run: gcloud info
 
       # - name: Terraform Format
       #   run: terraform fmt -check

@@ -41,7 +41,7 @@ jobs:
         run: terraform validate
 
       - name: Terraform Init
-        run: terraform init -backend=false
+        run: terraform init
 
       - name: Terraform Plan
         if: github.event_name == 'pull_request'

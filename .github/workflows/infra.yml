@@ -1,4 +1,4 @@
-name: CI
+name: Infra CI
 
 on:
   push:
@@ -34,17 +34,11 @@ jobs:
       - name: Terraform Format
         run: terraform fmt -check -recursive
 
-      - name: Terraform Init (no backend)
-        run: terraform init -backend=false
-
       - name: Terraform Validate
         run: terraform validate
 
       - name: Terraform Init
         run: terraform init
-
-      - name: Enable Terraform debug logs
-        run: echo "TF_LOG=DEBUG" >> $GITHUB_ENV
 
       - name: Terraform Plan
         if: github.event_name == 'pull_request'

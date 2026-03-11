@@ -1,0 +1,21 @@
+customer_id,name,city,snapshot_date
+1,Alice,Amsterdam,2024-01-01
+2,Bob,Rotterdam,2024-01-01
+3,Charlie,Utrecht,2024-01-01
+4,Diana,Paris,2024-01-01
+5,Evan,Berlin,2024-01-01
+1,Alice,Amsterdam,2024-02-01
+2,Bob,The Hague,2024-02-01
+3,Charlie,Utrecht,2024-02-01
+4,Diana,Paris,2024-02-01
+5,Evan,Munich,2024-02-01
+1,Alice,Berlin,2024-03-01
+2,Bob,The Hague,2024-03-01
+3,Charlie,Amsterdam,2024-03-01
+4,Diana,Lyon,2024-03-01
+5,Evan,Munich,2024-03-01
+1,Alice,Berlin,2024-04-01
+2,Bob,Rotterdam,2024-04-01
+3,Charlie,Amsterdam,2024-04-01
+4,Diana,Lyon,2024-04-01
+5,Evan,Hamburg,2024-04-01

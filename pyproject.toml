@@ -8,6 +8,7 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
+    "google-cloud-storage>=3.9.0",
     "pytest>=9.0.2",
 ]
 
@@ -20,8 +21,3 @@ build-backend = "uv_build"
 
 [tool.ruff]
 line-length = 120
-
-[tool.ruff.lint]
-select = ['ALL']
-ignore = ['D100', 'D101', 'D104', 'D107','D202', 'S311']
-fixable = ["ALL"]

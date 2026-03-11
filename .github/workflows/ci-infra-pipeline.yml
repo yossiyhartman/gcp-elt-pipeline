@@ -1,4 +1,4 @@
-name: Infra CI for the pipeline
+name: Infra CI
 run-name: ${{ github.workflow }}
 
 on:
@@ -7,7 +7,7 @@ on:
       - "infra/pipeline/**"
 
   pull_request:
-    types: [opened, synchronize, reopened, closed]
+    types: [closed]
     branches: [main]
     paths:
       - "infra/pipeline/**"
@@ -38,9 +38,9 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
-  terraform-pull_request:
+  terraform-plan:
     needs: terraform-ci
-    if: success() && github.event_name == 'pull_request'
+    if: success()
     runs-on: ubuntu-latest
 
     steps:

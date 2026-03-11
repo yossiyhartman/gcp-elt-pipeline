@@ -7,6 +7,7 @@ terraform {
   }
 }
 
+
 provider "google" {
   project = "yossi-infra-ci-project"
 }

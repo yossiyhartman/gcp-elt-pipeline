@@ -12,17 +12,17 @@ provider "google" {
 }
 
 module "artifact-registry" {
-  source           = "../modules/artifactregistry"
+  source           = "modules/artifactregistry"
   artifact-repo-id = "yossi-artifact-repo"
 }
 
 module "blobstorage" {
-  source      = "../modules/blobstorage"
+  source      = "modules/blobstorage"
   bucket-name = "yossi-data-bucket"
 }
 
 module "cloudsql" {
-  source        = "../modules/cloudsql"
+  source        = "modules/cloudsql"
   instance-name = "yossi-db-instance"
   db-name       = "yossi-db"
 }

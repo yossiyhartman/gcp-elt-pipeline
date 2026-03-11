@@ -1,0 +1,95 @@
+name: Infra CI for the pipeline
+run-name: ${{ github.workflow }}
+
+on:
+  push:
+    paths:
+      - "infra/pipeline/**"
+
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches: [main]
+    paths:
+      - "infra/pipeline/**"
+
+defaults:
+  run:
+    working-directory: infra/pipeline
+
+jobs:
+  terraform-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.14.6
+
+      - name: Terraform Format
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Init
+        run: terraform init -backend=false
+
+      - name: Terraform Validate
+        run: terraform validate
+
+  terraform-pull_request:
+    needs: terraform-ci
+    if: success() && github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Terraform setup
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.14.6
+
+      - name: Authenticate
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform Plan
+        timeout-minutes: 5
+        run: terraform plan -no-color -input=false -lock-timeout=60s
+
+  terraform-pull_request-merged:
+    needs: terraform-ci
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Terraform setup
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.14.6
+
+      - name: Authenticate
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform Plan
+        timeout-minutes: 5
+        run: terraform plan -no-color -input=false -lock-timeout=60s
+
+      - name: Terraform Apply
+        if: success()
+        run: terraform apply -auto-approve

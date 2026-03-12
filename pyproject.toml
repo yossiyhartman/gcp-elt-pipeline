@@ -8,8 +8,11 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
+    "cloud-sql-python-connector[pg8000]>=1.20.0",
     "google-cloud-storage>=3.9.0",
+    "pyarrow>=23.0.1",
     "pytest>=9.0.2",
+    "sqlalchemy>=2.0.48",
 ]
 
 [project.scripts]

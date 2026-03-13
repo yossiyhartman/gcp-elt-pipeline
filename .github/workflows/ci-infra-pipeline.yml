@@ -20,7 +20,7 @@ jobs:
   terraform-ci:
     runs-on: ubuntu-latest
 
-    secrets:
+    env:
       TF_VAR_project_name: ${{ secrets.TF_project_name }}
       TF_VAR_artifact_repo_id: ${{ secrets.TF_artifact_repo_id }}
       TF_VAR_instance_name: ${{ secrets.TF_instance_name }}

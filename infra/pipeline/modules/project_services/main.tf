@@ -4,7 +4,8 @@ locals {
     "artifactregistry.googleapis.com",
     "run.googleapis.com",
     "sqladmin.googleapis.com",
-    "secretmanager.googleapis.com"
+    "secretmanager.googleapis.com",
+    "cloudresourcemanager.googleapis.com"
   ]
 }
 

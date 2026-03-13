@@ -32,6 +32,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      - name: Check for ENV
+        run: echo "$TF_VAR_project_name"
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v4
         with:

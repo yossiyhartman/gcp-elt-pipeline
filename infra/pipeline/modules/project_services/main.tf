@@ -1,0 +1,15 @@
+locals {
+  services = [
+    "iam.googleapis.com",
+    "artifactregistry.googleapis.com",
+    "run.googleapis.com",
+    "sqladmin.googleapis.com",
+    "secretmanager.googleapis.com"
+  ]
+}
+
+resource "google_project_service" "enable-project-services" {
+  for_each           = toset(local.services)
+  service            = each.key
+  disable_on_destroy = false
+}

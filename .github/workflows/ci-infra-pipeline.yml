@@ -7,7 +7,7 @@ on:
       - "infra/pipeline/**"
 
   pull_request:
-    types: [closed]
+    types: [opened, synchronize, reopened, closed]
     branches: [main]
     paths:
       - "infra/pipeline/**"
@@ -15,6 +15,14 @@ on:
 defaults:
   run:
     working-directory: infra/pipeline
+
+env:
+  TF_VAR_project_name: ${{ secrets.TF_PROJECT_NAME }}
+  TF_VAR_artifact_repo_id: ${{ secrets.TF_ARTIFACT_REPO_ID }}
+  TF_VAR_instance_name: ${{ secrets.TF_INSTANCE_NAME }}
+  TF_VAR_db_name: ${{ secrets.TF_DB_NAME }}
+  TF_VAR_db_user: ${{ secrets.TF_DB_USER }}
+  TF_VAR_db_password: ${{ secrets.TF_DB_PASSWORD }}
 
 jobs:
   terraform-ci:
@@ -43,6 +51,14 @@ jobs:
     if: success()
     runs-on: ubuntu-latest
 
+    # env:
+    #   TF_VAR_project_name: ${{ secrets.TF_PROJECT_NAME }}
+    #   TF_VAR_artifact_repo_id: ${{ secrets.TF_ARTIFACT_REPO_ID }}
+    #   TF_VAR_instance_name: ${{ secrets.TF_INSTANCE_NAME }}
+    #   TF_VAR_db_name: ${{ secrets.TF_DB_NAME }}
+    #   TF_VAR_db_user: ${{ secrets.TF_DB_USER }}
+    #   TF_VAR_db_password: ${{ secrets.TF_DB_PASSWORD }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -62,12 +78,20 @@ jobs:
 
       - name: Terraform Plan
         timeout-minutes: 5
-        run: terraform plan -no-color -input=false -lock-timeout=60s
+        run: terraform plan -no-color -lock-timeout=60s
 
   terraform-pull_request-merged:
     needs: terraform-ci
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+
+    # env:
+    #   TF_VAR_project_name: ${{ secrets.TF_PROJECT_NAME }}
+    #   TF_VAR_artifact_repo_id: ${{ secrets.TF_ARTIFACT_REPO_ID }}
+    #   TF_VAR_instance_name: ${{ secrets.TF_INSTANCE_NAME }}
+    #   TF_VAR_db_name: ${{ secrets.TF_DB_NAME }}
+    #   TF_VAR_db_user: ${{ secrets.TF_DB_USER }}
+    #   TF_VAR_db_password: ${{ secrets.TF_DB_PASSWORD }}
 
     steps:
       - name: Checkout

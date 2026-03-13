@@ -7,14 +7,14 @@ on:
       - "infra/bootstrap/**"
 
   pull_request:
-    types: [closed]
+    types: [opened, synchronize, reopened, closed]
     branches: [main]
     paths:
       - "infra/bootstrap/**"
 
 defaults:
   run:
-    working-directory: infra/pipeline
+    working-directory: infra/bootstrap
 
 jobs:
   terraform-ci:

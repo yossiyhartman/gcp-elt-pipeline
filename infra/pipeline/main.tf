@@ -18,6 +18,7 @@ module "enable_project_services" {
 module "service_account" {
   source       = "./modules/service_account"
   project_name = var.project_name
+  depends_on   = [module.enable_project_services]
 }
 
 module "artifact_registry" {
